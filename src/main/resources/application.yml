@@ -1,0 +1,37 @@
+server:
+  port: 8083
+
+spring:
+  data:
+    redis:
+      host: localhost
+      port: 6380
+
+  datasource:
+    source:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3307/videos
+      username: root
+      password: 1234
+    replica:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      jdbc-url: jdbc:mysql://localhost:3308/videos
+      username: root
+      password: 1234
+
+  jpa:
+    hibernate:
+      ddl-auto: create
+    properties:
+      hibernate:
+        format_sql: true
+    show-sql: true
+
+  main:
+    allow-bean-definition-overriding: true
+
+logging:
+  level:
+    org:
+      hibernate:
+        type: trace
