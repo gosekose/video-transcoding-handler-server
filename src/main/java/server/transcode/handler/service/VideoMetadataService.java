@@ -5,8 +5,10 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import server.transcode.handler.domain.VideoMetadata;
+import server.transcode.handler.other.VideoDescription;
+import server.transcode.handler.other.VideoDescriptionRepository;
 import server.transcode.handler.repository.VideoMetadataRepository;
-import server.transcode.handler.service.dto.TransVideoMetadataDto;
+import server.transcode.handler.service.dto.TransMetadataDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -16,20 +18,26 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class VideoMetadataService {
+    private final VideoDescriptionRepository videoDescriptionRepository;
 
     private final VideoMetadataRepository videoMetadataRepository;
 
-    public void saveMetaDataAndSetCache(TransVideoMetadataDto metaDataList) {
-        List<VideoMetadata> videoMetadataList = metaDataList.getMetas()
+    public void saveMetaDataAndSetCache(TransMetadataDto metadataDto) {
+
+        VideoDescription videoDescription = videoDescriptionRepository
+                .findById(metadataDto.getDescriptionId()).orElseThrow();
+
+        List<VideoMetadata> videoMetadataList = metadataDto
+                .getVideoMetadataDtoList()
                 .stream()
                 .map(meta -> VideoMetadata.builder()
-                        .transVideoFilePath(meta.getTransVideoFilePaths())
+                        .videoDescription(videoDescription)
+                        .filePath(meta.getTransVideoFilePath())
                         .bitrate(meta.getBitrate())
                         .format(meta.getFormat())
-                        .duration(metaDataList.getDuration())
+                        .duration(metadataDto.getDuration())
                         .build())
                 .collect(Collectors.toList());
-
         videoMetadataRepository.saveAll(videoMetadataList);
     }
 
