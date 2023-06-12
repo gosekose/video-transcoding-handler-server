@@ -6,6 +6,5 @@ import server.transcode.handler.other.dao.VideoDescriptionOnly;
 
 @Repository
 public interface VideoDescriptionRepository extends JpaRepository<VideoDescription, Long> {
-
-    VideoDescriptionOnly findVideoInformationBId(Long id);
+    VideoDescriptionOnly findVideoDescriptionOnlyById(Long id);
 }

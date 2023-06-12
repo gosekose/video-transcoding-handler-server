@@ -1,0 +1,38 @@
+version: '3'
+services:
+  app:
+    build:
+      context: .
+      dockerfile: app.dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - transcode-source
+      - transcode-replica
+      - redis
+
+  transcode-source:
+    build:
+      context: .
+      dockerfile: dockerfiles/source/mysql-source.dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: transcode
+    ports:
+      - "3307:3306"
+
+  transcode-replica:
+    build:
+      context: .
+      dockerfile: dockerfiles/replica/mysql-replica.dockerfile
+    environment:
+      MYSQL_ROOT_PASSWORD: 1234
+      MYSQL_DATABASE: transcode
+    command: --replicate-do-db=transcode --server-id=2 --relay-log-index=relay-log-index --relay-log=relay-log --master-host=transcode-source --master-user=root --master-password=1234 --master-connect-retry=60
+    ports:
+      - "3308:3306"
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6380:6379"

@@ -7,15 +7,21 @@ spring:
       host: localhost
       port: 6380
 
+  rabbitmq:
+    host: 127.0.0.1
+    port: 5672
+    username: guest
+    password: guest
+
   datasource:
     source:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://localhost:3307/videos
+      jdbc-url: jdbc:mysql://localhost:3307/trans
       username: root
       password: 1234
     replica:
       driver-class-name: com.mysql.cj.jdbc.Driver
-      jdbc-url: jdbc:mysql://localhost:3308/videos
+      jdbc-url: jdbc:mysql://localhost:3308/trans
       username: root
       password: 1234
 
