@@ -25,12 +25,25 @@ spring:
       username: root
       password: 1234
 
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    baseline-version: 1
+    url: jdbc:mysql://localhost:3307/trans
+    user: root
+    password: 1234
+
   jpa:
+    database: mysql
+    database-platform: org.hibernate.dialect.MySQL8Dialect
+    generate-ddl: false # DDL 생성 여부
+
     hibernate:
-      ddl-auto: create
+      ddl-auto: validate
     properties:
       hibernate:
-        format_sql: true
+        enable_lazy_load_no_trans: true # LAZY 로드를 default로 설정
+        format_sql: true # sql을 보기 좋게 출력
     show-sql: true
 
   main:
@@ -40,4 +53,4 @@ logging:
   level:
     org:
       hibernate:
-        type: trace
+        type: info
