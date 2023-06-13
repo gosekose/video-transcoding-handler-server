@@ -10,4 +10,5 @@ import java.util.List;
 @Repository
 public interface VideoMetadataRepository extends JpaRepository<VideoMetadata, Long> {
     List<VideoMetadata> findVideoMetadataByVideoDescription(VideoDescription videoDescription);
+    VideoMetadata findVideoMetadataById(Long id);
 }

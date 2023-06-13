@@ -21,7 +21,6 @@ public class VideoMetadataConsumer {
             videoMetadataService.saveMetaDataAndSetCache(metaDataList);
         } catch (Exception e) {
             log.error(e.getMessage());
-            // 실패 핸들러에 추가하여 추후 다시 재시도 할 수 있도록 요청 로직 작성 필요
         }
     }
 }
