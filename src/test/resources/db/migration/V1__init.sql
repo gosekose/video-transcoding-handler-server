@@ -41,3 +41,10 @@ alter table video_metadata
             references video_description (video_information_id);
 
 
+# 테스트 케이스 용도 데이터 추가하기
+insert into video_description values (1);
+insert into video_description values (2);
+insert into video_description values (3);
+insert into video_description values (4);
+
+insert into video_description_seq values (5);

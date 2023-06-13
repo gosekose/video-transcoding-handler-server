@@ -1,8 +1,3 @@
-alter table video_metadata
-
-drop
-foreign key FKccwcre7a2ik4379h39pen4rx5;
-
 drop table if exists video_description_seq;
 drop table if exists video_metadata_seq;
 drop table if exists video_description;
@@ -21,8 +16,8 @@ create table video_metadata_seq (
 insert into video_metadata_seq values ( 1 );
 
 create table video_description (
-   video_information_id bigint not null,
-   primary key (video_information_id)
+   video_description_id bigint not null,
+   primary key (video_description_id)
 ) engine=InnoDB;
 
 create table video_metadata (
@@ -38,6 +33,12 @@ create table video_metadata (
 alter table video_metadata
     add constraint FKccwcre7a2ik4379h39pen4rx5
         foreign key (video_description_id)
-            references video_description (video_information_id);
+            references video_description (video_description_id);
 
+# 테스트 케이스 용도 데이터 추가하기
+insert into video_description values (1);
+insert into video_description values (2);
+insert into video_description values (3);
+insert into video_description values (4);
 
+insert into video_description_seq values (5);

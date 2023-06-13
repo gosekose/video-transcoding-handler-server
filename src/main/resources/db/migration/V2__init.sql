@@ -21,8 +21,8 @@ create table video_metadata_seq (
 insert into video_metadata_seq values ( 1 );
 
 create table video_description (
-   video_information_id bigint not null,
-   primary key (video_information_id)
+   video_description_id bigint not null,
+   primary key (video_description_id)
 ) engine=InnoDB;
 
 create table video_metadata (
@@ -38,6 +38,6 @@ create table video_metadata (
 alter table video_metadata
     add constraint FKccwcre7a2ik4379h39pen4rx5
         foreign key (video_description_id)
-            references video_description (video_information_id);
+            references video_description (video_description_id);
 
 

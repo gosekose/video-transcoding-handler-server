@@ -14,6 +14,6 @@ import lombok.NoArgsConstructor;
 public class VideoDescription {
 
     @Id @GeneratedValue
-    @Column(name = "video_information_id")
+    @Column(name = "video_description_id")
     private Long id;
 }

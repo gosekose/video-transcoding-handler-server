@@ -7,8 +7,10 @@ import org.springframework.transaction.annotation.Transactional;
 import server.transcode.handler.domain.VideoMetadata;
 import server.transcode.handler.other.VideoDescription;
 import server.transcode.handler.other.VideoDescriptionRepository;
+import server.transcode.handler.other.VideoDescriptionService;
 import server.transcode.handler.repository.VideoMetadataRepository;
 import server.transcode.handler.service.dto.TransMetadataDto;
+import server.transcode.handler.service.dto.VideoMetadataDto;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -18,14 +20,13 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 @Service
 public class VideoMetadataService {
-    private final VideoDescriptionRepository videoDescriptionRepository;
+    private final VideoDescriptionService videoDescriptionService;
 
     private final VideoMetadataRepository videoMetadataRepository;
 
     public void saveMetaDataAndSetCache(TransMetadataDto metadataDto) {
 
-        VideoDescription videoDescription = videoDescriptionRepository
-                .findById(metadataDto.getDescriptionId()).orElseThrow();
+        VideoDescription videoDescription = videoDescriptionService.findById(metadataDto.getDescriptionId());
 
         List<VideoMetadata> videoMetadataList = metadataDto
                 .getVideoMetadataDtoList()
@@ -41,4 +42,7 @@ public class VideoMetadataService {
         videoMetadataRepository.saveAll(videoMetadataList);
     }
 
+    public List<VideoMetadata> findMetaDataListByDescription(VideoDescription videoDescription) {
+        return videoMetadataRepository.findVideoMetadataByVideoDescription(videoDescription);
+    }
 }
